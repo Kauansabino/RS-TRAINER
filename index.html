@@ -45,7 +45,7 @@
 
 </head>
 
-<body>
+<body class="site-locked">
 
     <!-- =========================================
                 PRELOADER
@@ -79,15 +79,16 @@
 
                 <!-- Logo -->
 
-                <a href="#" class="logo">
+                <a href="#home" class="logo" id="brand-link">
 
                     <img src="assets/images/logo.png" alt="RS Personal">
+                    <span class="personal-header-title">Área do Personal</span>
 
                 </a>
 
                 <!-- Menu -->
 
-                <ul class="nav-menu">
+                <ul class="nav-menu" id="main-navigation">
 
                     <li>
                         <a href="#home">Início</a>
@@ -113,25 +114,31 @@
                         <a href="#contato">Contato</a>
                     </li>
 
+                    <li class="access-nav-link">
+                        <a href="#acesso">Entrar</a>
+                    </li>
+
                 </ul>
 
                 <!-- Botão -->
 
-                <a href="#agendamento" class="btn-navbar">
+                <a href="#acesso" class="btn-navbar login-navbar">
 
-                    Agendar
+                    Entrar
 
                 </a>
 
+                <button type="button" id="logout-btn" class="btn-navbar logout-btn" hidden>Sair</button>
+
                 <!-- Menu Mobile -->
 
-                <div id="menu-btn">
+                <button type="button" id="menu-btn" aria-label="Abrir menu" aria-controls="main-navigation" aria-expanded="false">
 
                     <span></span>
                     <span></span>
                     <span></span>
 
-                </div>
+                </button>
 
             </nav>
 
@@ -385,6 +392,119 @@
     </section>
 
     <!-- =========================================
+                PAINEL DO PERSONAL
+    ========================================== -->
+
+    <section id="painel-personal" class="personal-panel">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Área administrativa</span>
+                <h2 class="section-title">Painel do Personal</h2>
+                <p>Gerencie alunos, treinos e solicitações de agendamento.</p>
+            </div>
+
+            <div class="personal-dashboard" aria-label="Resumo do painel">
+                <article class="dashboard-stat">
+                    <span class="dashboard-stat-icon"><i class="fa-solid fa-users" aria-hidden="true"></i></span>
+                    <div><strong id="dashboard-students">0</strong><span>Alunos ativos</span></div>
+                </article>
+                <article class="dashboard-stat">
+                    <span class="dashboard-stat-icon"><i class="fa-solid fa-clock" aria-hidden="true"></i></span>
+                    <div><strong id="dashboard-pending">0</strong><span>Solicitações pendentes</span></div>
+                </article>
+                <article class="dashboard-stat">
+                    <span class="dashboard-stat-icon"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></span>
+                    <div><strong id="dashboard-confirmed">0</strong><span>Agendamentos confirmados</span></div>
+                </article>
+            </div>
+
+            <div class="personal-grid">
+                <article class="personal-card student-manager">
+                    <div class="personal-card-header">
+                        <div>
+                            <span class="personal-card-kicker">Gestão</span>
+                            <h3>Alunos ativos</h3>
+                        </div>
+                        <span id="personal-student-count" class="personal-count">0</span>
+                    </div>
+                    <label class="student-search" for="personal-student-search">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input id="personal-student-search" type="search" placeholder="Buscar aluno por nome ou e-mail">
+                    </label>
+                    <div id="personal-students" class="personal-list" aria-live="polite">Carregando...</div>
+                </article>
+                <article class="personal-card">
+                    <div class="personal-card-header">
+                        <div>
+                            <span class="personal-card-kicker">Agenda</span>
+                            <h3>Agendamentos</h3>
+                        </div>
+                    </div>
+                    <div id="personal-bookings" class="personal-list" aria-live="polite">Carregando...</div>
+                </article>
+            </div>
+
+            <div class="personal-card personal-plan-editor">
+                <h3>Cadastrar aluno</h3>
+                <form id="student-form">
+                    <div class="personal-grid">
+                        <div class="form-group">
+                            <label for="student-name">Nome</label>
+                            <input id="student-name" name="name" minlength="2" maxlength="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-email">E-mail</label>
+                            <input id="student-email" name="email" type="email" maxlength="254" required>
+                        </div>
+                    </div>
+                    <div class="personal-grid">
+                        <div class="form-group">
+                            <label for="student-password">Senha temporária</label>
+                            <input id="student-password" name="password" type="password" minlength="8" maxlength="72" autocomplete="new-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-phone">WhatsApp</label>
+                            <input id="student-phone" name="phone" type="tel" placeholder="(00) 00000-0000">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-notes">Observações</label>
+                        <textarea id="student-notes" name="notes" rows="3" placeholder="Objetivos, restrições ou informações iniciais"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary access-submit">Criar conta do aluno</button>
+                    <p id="student-feedback" class="access-feedback" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+
+            <div class="personal-card personal-plan-editor">
+                <h3>Criar plano ativo</h3>
+                <form id="plan-form">
+                    <div class="form-group">
+                        <label for="plan-student">Aluno</label>
+                        <select id="plan-student" name="studentId" required>
+                            <option value="" selected disabled>Selecione um aluno</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-title">Título</label>
+                        <input id="plan-title" name="title" maxlength="120" placeholder="Plano de força" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-description">Descrição</label>
+                        <textarea id="plan-description" name="description" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-days">Dias e exercícios em JSON</label>
+                        <textarea id="plan-days" rows="14" required placeholder='[{"name":"Treino A","dayOfWeek":"1","exercises":[{"name":"Agachamento","muscleGroup":"Pernas","sets":4,"reps":"8-10","restSeconds":90}]}]'></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary access-submit">Salvar plano</button>
+                    <p id="plan-feedback" class="access-feedback" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
                 GALERIA
     ========================================== -->
 
@@ -510,6 +630,11 @@
                     </button>
                     <p class="booking-feedback" id="booking-feedback" role="status" aria-live="polite"></p>
                 </form>
+                <aside class="my-bookings-card" id="my-bookings-card" hidden>
+                    <span class="section-tag">Minha agenda</span>
+                    <h3>Agendamentos</h3>
+                    <div id="my-bookings-list" class="my-bookings-list" aria-live="polite">Carregando...</div>
+                </aside>
             </div>
         </div>
 
@@ -525,7 +650,7 @@
             <div class="section-header">
                 <span class="section-tag">Área do aluno</span>
                 <h2 class="section-title">Acesse sua conta</h2>
-                <p>Entre para acompanhar seus treinos ou crie uma conta para começar.</p>
+                <p>Entre para acompanhar seus treinos ou crie sua conta de aluno.</p>
             </div>
 
             <div class="access-grid">
@@ -544,28 +669,28 @@
 
                     <button type="submit" class="btn-primary access-submit">Entrar</button>
                     <p class="access-feedback" id="login-feedback" role="status" aria-live="polite"></p>
-                    <p class="access-switch">Não tem conta? <button type="button" id="show-register">Cadastrar</button></p>
+                    <p class="access-switch">Ainda não tem conta? <button type="button" id="show-register">Criar conta</button></p>
                 </form>
 
                 <form class="access-form is-hidden" id="register-form">
-                    <h3>Criar conta</h3>
-
+                    <h3>Criar conta de aluno</h3>
                     <div class="form-group">
                         <label for="register-name">Nome</label>
-                        <input type="text" id="register-name" name="name" placeholder="Seu nome completo" required>
+                        <input type="text" id="register-name" name="name" minlength="2" maxlength="100" autocomplete="name" required>
                     </div>
-
                     <div class="form-group">
                         <label for="register-email">E-mail</label>
-                        <input type="email" id="register-email" name="email" placeholder="voce@email.com" required>
+                        <input type="email" id="register-email" name="email" maxlength="254" autocomplete="email" required>
                     </div>
-
                     <div class="form-group">
                         <label for="register-password">Senha</label>
-                        <input type="password" id="register-password" name="password" placeholder="Crie uma senha" minlength="6" required>
+                        <input type="password" id="register-password" name="password" minlength="8" maxlength="72" autocomplete="new-password" required>
                     </div>
-
-                    <button type="submit" class="btn-primary access-submit">Criar minha conta</button>
+                    <div class="form-group">
+                        <label for="register-phone">WhatsApp (opcional)</label>
+                        <input type="tel" id="register-phone" name="phone" autocomplete="tel">
+                    </div>
+                    <button type="submit" class="btn-primary access-submit">Criar conta</button>
                     <p class="access-feedback" id="register-feedback" role="status" aria-live="polite"></p>
                     <p class="access-switch">Já tem uma conta? <button type="button" id="show-login">Entrar</button></p>
                 </form>
@@ -588,17 +713,17 @@
             </div>
 
             <div class="contact-grid">
-                <a class="contact-card" href="#">
+                <div class="contact-card contact-card-unavailable" aria-label="WhatsApp: link ainda não configurado">
                     <i class="fa-brands fa-whatsapp"></i>
                     <span>WhatsApp</span>
-                    <small>Fale diretamente com a personal</small>
-                </a>
+                    <small>Link de contato ainda não configurado</small>
+                </div>
 
-                <a class="contact-card" href="#">
+                <div class="contact-card contact-card-unavailable" aria-label="Instagram: link ainda não configurado">
                     <i class="fa-brands fa-instagram"></i>
                     <span>Instagram</span>
-                    <small>Acompanhe dicas e novidades</small>
-                </a>
+                    <small>Perfil ainda não configurado</small>
+                </div>
 
                 <a class="contact-card" href="mailto:contato@rspersonal.com">
                     <i class="fa-regular fa-envelope"></i>
@@ -633,7 +758,7 @@
                 JAVASCRIPT
     ========================================== -->
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 
 </body>
 
