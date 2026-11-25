@@ -1,6 +1,6 @@
 # RS Personal Trainer
 
-Projeto pessoal para praticar desenvolvimento web. O site apresenta o trabalho de um personal trainer e inclui áreas para alunos e para o personal.
+Projeto pessoal para praticar desenvolvimento web e apoio com IA. O site apresenta o trabalho de um personal trainer e inclui áreas para alunos e para o personal.
 
 ## O que dá para fazer
 
